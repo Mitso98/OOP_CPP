@@ -24,17 +24,22 @@ public:
     {
         m_imag = imag;
     }
+    void add(Complex comp)
+    {
+        m_real += comp.getReal();
+        m_imag += comp.getImag();
+    }
+    void subtract(Complex comp)
+    {
+        m_real -= comp.getReal();
+        m_imag -= comp.getImag();
+    }
     void print()
     {
         if (m_imag > 0)
             cout << m_real << " + " << m_imag << "i";
         else
             cout << m_real << " - " << m_imag << "i";
-    }
-    void add(Complex comp)
-    {
-        m_real += comp.getReal();
-        m_imag += comp.getImag();
     }
 
 };
