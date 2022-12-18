@@ -1,2 +1,2 @@
-# OOP-C-
+# OOP&C++
 Applying OOP concepts with C++.
