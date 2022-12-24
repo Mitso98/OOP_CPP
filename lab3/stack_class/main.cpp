@@ -2,8 +2,7 @@
 
 using namespace std;
 
-class Stack
-{
+class Stack{
 private:
     int* m_stack;
     int m_tos;
@@ -19,6 +18,16 @@ public:
         m_number_of_stacks++;
         cout << "Stack number " << m_number_of_stacks << " has been created." << endl;
         cout << "Size of this stack is " << m_stack_size << endl;
+    }
+    Stack(Stack &z)
+    {
+        m_tos = z.m_tos;
+        m_stack_size = z.m_stack_size;
+        m_stack = new int[m_stack_size];
+        for(int i=0;  i < m_tos; i++ )
+            m_stack[i] = z.m_stack [i];
+
+        m_number_of_stacks++;
     }
     void push(int value)
     {
@@ -58,13 +67,32 @@ public:
     ~Stack()
     {
         cout << "Stack number " << m_number_of_stacks << " has been terminated" << endl;
-        delete[] m_stack;
         m_number_of_stacks--;
+        delete[] m_stack;
     }
-
-
+    friend void viewContent_value(Stack x);
+    friend void viewContent_ref(Stack &x);
 };
 int Stack::m_number_of_stacks = 0;
+
+void viewContent_value(Stack x)
+{
+    int c = x.m_tos;
+
+    cout << "############ view_content_by_value ############" << endl;
+    while (0 != c)
+        cout << x.m_stack[--c] << endl;
+    cout << "############ view_content_by_value ############" << endl;
+}
+void viewContent_ref(Stack &x)
+{
+    int c = x.m_tos;
+
+    cout << "############ view_content_by_value ############" << endl;
+    while (0 != c)
+        cout << x.m_stack[--c] << endl;
+    cout << "############ view_content_by_value ############" << endl;
+}
 
 int main()
 {
@@ -83,5 +111,26 @@ int main()
     s1.pop();
 
     s1.print();
+
+
+    // each time we create a bitwise object without constructor
+    // after viewContent finish this class get terminated with the destructor
+    // which decrease m_number_of_stacks AKA => 'objects counter'
+    viewContent_value(s1); // Destructor: will run saying number 1 was terminated
+    viewContent_value(s1);// Destructor: will run saying number 0 was terminated
+    viewContent_value(s1);// Destructor: will run saying number -1 was terminated
+    // Destructor: will run saying number -2 was terminated,
+    // in other words 'main object will be destructed'
+
+
+    /*
+    // only one object will be constructed and then destructed
+    // Hence Destructor & Constructor: will run only one time
+    // Because we are just dealing with the same object each time
+    viewContent_ref(s1);
+    viewContent_ref(s1);
+    viewContent_ref(s1);
+    */
+
     return 0;
 }
