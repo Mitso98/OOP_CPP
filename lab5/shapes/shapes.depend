@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1672006016 source:d:\iti\oop_cpp\lab5\shapes\main.cpp
+	<iostream>
+	<windows.h>
+
